@@ -8,29 +8,29 @@ START_TIME=
 CSV_OUTPUT=false
 QUIET=false
 
-# Reads the cvommand line parameters
+# Reads the command line parameters
 while [ "$1" != "" ]
 do
 	case $1 in
-		-L | --limit )	  shift
+		-L | --limit )		shift
 								PARAM_LIMIT=$1
 								;;
 		-p | --project )	shift
 								PROJECT=$1
 								;;
-		-f | --file )	   shift
+		-f | --file )		shift
 								OUTPUT_FILE=$1
 								;;
 		-c | --csv )			CSV_OUTPUT=true
 								;;
 		-v | --verbose )		set -x # echo on
 								;;
-		-q | --quiet )		  QUIET=true
+		-q | --quiet )			QUIET=true
 								;;
-		-h | --help )		   printhelp
+		-h | --help )			printhelp
 								exit
 								;;
-		* )					 printhelp
+		* )						printhelp
 								exit 1
 	esac
 	shift
@@ -68,6 +68,7 @@ function usage()
 	printf "\nExample:\n	gcpListUsers.sh --limit 5 --project my_gcp_project --file gcpUsers.csv --csv\n"
 }
 
+# Print Help
 function printhelp()
 {
 	printf "Description: \n  This script reads the user accounts in GCP projects and lists all email addresses found and the projects that they have access to. \n\n"
@@ -96,18 +97,6 @@ function printHeader(){
 		printf "CSV Output: ${CSV_OUTPUT}\n"
 		printf "\n======================\n"
 	fi
-}
-
-# Prints a summary of the script execution.
-function printFooter(){
-	if [ $QUIET == 'false' ]; then
-		END_TIME=`date +%s`
-		TOTAL_RUN_TIME=$((END_TIME-START_TIME))
-		printf "End Time: $(date)\n"
-		printf "Total Run Time: ${TOTAL_RUN_TIME} seconds.\n"
-		printf "Process Complete \n"
-	fi
-	printf "\n======================\n"
 }
 
 # Reads a list of all projects that the invoker has access to
@@ -170,7 +159,7 @@ function saveFile(){
 	cat gcpusers.tmp | sort --unique >> ${OUTPUT_FILE}
 }
 
-# removes temporary files.
+# Removes temporary files.
 function cleanupFiles(){
 	rm gcpusers.tmp
 }
@@ -182,6 +171,18 @@ function printOutput(){
 		cat gcpusers.tmp | sort --unique
 		printf "\n======================\n"
 	fi
+}
+
+# Prints a summary of the script execution.
+function printFooter(){
+	if [ $QUIET == 'false' ]; then
+		END_TIME=`date +%s`
+		TOTAL_RUN_TIME=$((END_TIME-START_TIME))
+		printf "End Time: $(date)\n"
+		printf "Total Run Time: ${TOTAL_RUN_TIME} seconds.\n"
+		printf "Process Complete \n"
+	fi
+	printf "\n======================\n"
 }
 
 main
