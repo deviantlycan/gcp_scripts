@@ -70,7 +70,7 @@ function usage()
 
 function printhelp()
 {
-	printf "Description: \n  This script reads the user accounts in GCP projects and lists all email addresses dound and rthe projects that they have access to. \n\n"
+	printf "Description: \n  This script reads the user accounts in GCP projects and lists all email addresses found and the projects that they have access to. \n\n"
 	usage
 }
 
